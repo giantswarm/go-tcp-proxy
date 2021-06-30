@@ -1,0 +1,41 @@
+version: 2.1
+
+orbs:
+  architect: giantswarm/architect@2.11.0
+
+workflows:
+  build:
+    jobs:
+      - architect/go-build:
+          name: go-build
+          binary: go-tcp-proxy
+          filters:
+            tags:
+              only: /^v.*/
+
+      - architect/push-to-docker:
+          context: "architect"
+          name: push-go-tcp-proxy-to-quay
+          image: "quay.io/giantswarm/go-tcp-proxy"
+          username_envar: "QUAY_USERNAME"
+          password_envar: "QUAY_PASSWORD"
+          requires:
+            - go-build
+          # Needed to trigger job also on git tag.
+          filters:
+            tags:
+              only: /^v.*/
+
+      - architect/push-to-docker:
+          context: "architect"
+          name: push-go-tcp-proxy-to-aliyun
+          image: "registry-intl.cn-shanghai.aliyuncs.com/giantswarm/go-tcp-proxy"
+          username_envar: "ALIYUN_USERNAME"
+          password_envar: "ALIYUN_PASSWORD"
+          requires:
+            - go-build
+          # Needed to trigger job also on git tag.
+          filters:
+            tags:
+              only: /^v.*/
+
