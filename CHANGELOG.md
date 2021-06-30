@@ -7,4 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/giantswarm/go-tcp-proxy/compare/v0.0.0...HEAD
+## [1.0.3] - 2021-06-30
+
+[Unreleased]: https://github.com/giantswarm/go-tcp-proxy/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/giantswarm/go-tcp-proxy/compare/v0.0.0...v1.0.3
