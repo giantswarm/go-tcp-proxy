@@ -73,10 +73,10 @@ func (p *Proxy) Start() {
 	//nagles?
 	if p.Nagles {
 		if conn, ok := p.lconn.(setNoDelayer); ok {
-			conn.SetNoDelay(true)
+			conn.SetNoDelay(true) // nolint:errcheck
 		}
 		if conn, ok := p.rconn.(setNoDelayer); ok {
-			conn.SetNoDelay(true)
+			conn.SetNoDelay(true) // nolint:errcheck
 		}
 	}
 
