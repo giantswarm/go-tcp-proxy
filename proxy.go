@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"crypto/tls"
+	"errors"
 	"io"
 	"net"
 )
@@ -55,9 +56,12 @@ type setNoDelayer interface {
 
 // Start - open connection to remote and start proxying data.
 func (p *Proxy) Start() {
-	defer p.lconn.Close()
-
 	var err error
+
+	defer func() {
+		err = errors.Join(err, p.lconn.Close())
+	}()
+
 	//connect to remote
 	if p.tlsUnwrapp {
 		p.rconn, err = tls.Dial("tcp", p.tlsAddress, nil)
@@ -68,15 +72,18 @@ func (p *Proxy) Start() {
 		p.Log.Warn("Remote connection failed: %s", err)
 		return
 	}
-	defer p.rconn.Close()
+
+	defer func() {
+		err = errors.Join(err, p.rconn.Close())
+	}()
 
 	//nagles?
 	if p.Nagles {
 		if conn, ok := p.lconn.(setNoDelayer); ok {
-			conn.SetNoDelay(true) // nolint:errcheck
+			err = errors.Join(err, conn.SetNoDelay(true))
 		}
 		if conn, ok := p.rconn.(setNoDelayer); ok {
-			conn.SetNoDelay(true) // nolint:errcheck
+			err = errors.Join(err, conn.SetNoDelay(true))
 		}
 	}
 
@@ -151,9 +158,13 @@ func (p *Proxy) pipe(src, dst io.ReadWriter) {
 			return
 		}
 		if islocal {
-			p.sentBytes += uint64(n)
+			if n > 0 {
+				p.sentBytes += uint64(n)
+			}
 		} else {
-			p.receivedBytes += uint64(n)
+			if n > 0 {
+				p.receivedBytes += uint64(n)
+			}
 		}
 	}
 }
