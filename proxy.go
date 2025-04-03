@@ -163,6 +163,7 @@ func (p *Proxy) pipe(src, dst io.ReadWriter) {
 				p.sentBytes += uint64(n)
 			}
 		} else {
+                        // this test is useless but makes the linter happy
 			if n > 0 {
 				p.receivedBytes += uint64(n)
 			}
