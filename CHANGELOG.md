@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.6] - 2026-03-08
+
 ## [1.0.5] - 2026-03-06
 
 Dummy release to publish to new registry
@@ -19,7 +21,8 @@ Dummy release to publish to new registry
 
 ## [1.0.3] - 2021-06-30
 
-[Unreleased]: https://github.com/giantswarm/go-tcp-proxy/compare/v1.0.5...HEAD
+[Unreleased]: https://github.com/giantswarm/go-tcp-proxy/compare/v1.0.6...HEAD
+[1.0.6]: https://github.com/giantswarm/go-tcp-proxy/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/giantswarm/go-tcp-proxy/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/giantswarm/go-tcp-proxy/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/giantswarm/go-tcp-proxy/compare/v0.0.0...v1.0.3
