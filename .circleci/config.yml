@@ -1,13 +1,14 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@8.0.2
+  architect: giantswarm/architect@8.2.2
 
 workflows:
   build:
     jobs:
       - architect/go-build:
           name: go-build
+          context: architect
           binary: go-tcp-proxy
           filters:
             tags:
